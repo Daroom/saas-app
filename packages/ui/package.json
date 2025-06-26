@@ -22,9 +22,7 @@
     "tailwindcss": "^3.4.1"
   },
   "devDependencies": {
-    "@types/react": "^18.2.0",
     "@saas-app/config": "*",
-    "react": "^18.2.0",
     "tsup": "^8.0.2",
     "typescript": "^5.2.2"
   }
