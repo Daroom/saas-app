@@ -1,0 +1,4 @@
+{
+  "extends": "@saas-app/config/typescript/client",
+  "include": ["src"]
+}

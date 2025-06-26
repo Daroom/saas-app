@@ -1,0 +1,28 @@
+{
+  "name": "@saas-app/database",
+  "version": "1.0.0",
+  "description": "Manage access to database using Prisma ORM",
+  "license": "MIT",
+  "author": "Morad MAWHOUB",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:push": "prisma db push",
+    "db:seed": "tsx prisma/seeds/initialSeed.ts",
+    "dev": "prisma studio --browser none",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "prisma": "^6.1.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.1.0",
+    "exponential-backoff": "^3.1.1"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

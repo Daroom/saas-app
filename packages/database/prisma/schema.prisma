@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  password  String?
+  registration DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  status       UserStatus @default(ACTIVE)
+  companyId    String
+  company      Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  @@map("users")
+}
+
+model Customer {
+  id           String   @id @default(cuid())
+  contact      String
+  company      String
+  phone        String?
+  email        String   @unique
+  registration DateTime @default(now())
+  status       CustomerStatus @default(ACTIVE)
+  
+  // Relations
+  invoices     Invoice[]
+  
+  @@map("customers")
+}
+
+model Company {
+  id          String   @id @default(cuid())
+  name        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  users       User[]
+  licenses    License[]
+  
+  @@map("companies")
+}
+
+model Invoice {
+  id         String   @id @default(cuid())
+  number     String   @unique
+  date       DateTime @default(now())
+  options    Json?    // Store flexible invoice options as JSON
+  status     InvoiceStatus @default(DRAFT)
+  
+  // Foreign key
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  
+  @@map("invoices")
+}
+
+model License {
+  id        String   @id @default(cuid())
+  maxUsers  Int
+  startDate DateTime
+  endDate   DateTime
+  status    LicenseStatus @default(ACTIVE)
+  
+  // Foreign key
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  @@map("licenses")
+}
+
+// Enums for status fields
+enum CustomerStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+  SUSPENDED
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+enum LicenseStatus {
+  ACTIVE
+  EXPIRED
+  SUSPENDED
+  CANCELLED
+}
