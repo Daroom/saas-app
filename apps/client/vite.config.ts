@@ -19,5 +19,11 @@ export default defineConfig({
   },
   preview: {
     port: 5173,
+  },
+  css: {
+    transformer: 'postcss',
+  },
+  optimizeDeps: {
+    include: ['@saas-app/ui']
   }
 })

@@ -1,5 +1,8 @@
 @import "tailwindcss";
-@import  "@saas-app/ui/styles.css"
-/* @source "@saas-app/ui/src/styles.css"; */
+@import  "@saas-app/ui/styles.css";
+@source "../../../packages/ui/src/components/**/*.{ts,tsx}";
+@source "../../**/*.{ts,tsx}";
+
+
 /* @source "@saas-app/ui/src/theme.css"; */
 

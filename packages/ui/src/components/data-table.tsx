@@ -59,7 +59,7 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       {searchKey && (
-        <div className="flex items-center py-4 border-border bg-background">
+        <div className="flex items-center py-4 border-border bg-pink-500">
           <Input
             placeholder="Search"
             value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}

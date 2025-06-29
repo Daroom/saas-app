@@ -16,8 +16,8 @@ const navigation = [
 
 export function Sidebar() {
   return (
-    <div className="hidden border-r bg-gray-100/40 lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-      <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-background px-6 pb-4">
+    <div className="hidden border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col animate-in slide-in-from-left duration-500">
+      <div className="flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-4">
         <nav className="flex flex-1 flex-col pt-8">
           <ul role="list" className="flex flex-1 flex-col gap-y-7">
             <li>
@@ -28,16 +28,22 @@ export function Sidebar() {
                       to={item.href}
                       className={({ isActive }) =>
                         cn(
-                          'flex gap-x-3 rounded-md p-2 text-sm leading-6',
-                          'hover:bg-gray-100 hover:text-gray-900',
+                          'group flex gap-x-3 rounded-md p-2 text-sm font-medium leading-6 transition-all duration-200',
+                          'hover:bg-primary-50 hover:text-primary-900',
                           isActive
-                            ? 'bg-gray-100 text-gray-900'
-                            : 'text-gray-700'
+                            ? 'bg-primary-50 text-primary-900'
+                            : 'text-gray-700 hover:text-primary-900'
                         )
                       }
                     >
-                      <item.icon className="h-6 w-6 shrink-0" />
-                      {item.name}
+                      <item.icon 
+                        className={cn(
+                          "h-6 w-6 shrink-0 transition-colors duration-200",
+                          "group-hover:text-primary-600",
+                          "animate-in fade-in duration-300"
+                        )} 
+                      />
+                      <span className="animate-in fade-in duration-300">{item.name}</span>
                     </NavLink>
                   </li>
                 ))}
