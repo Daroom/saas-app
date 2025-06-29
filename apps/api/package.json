@@ -10,7 +10,8 @@
     "dev": "tsx watch src/index.ts",
     "build": "NODE_ENV=production tsup",
     "start": "node build/index.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
   },
   "keywords": [],
   "license": "ISC",

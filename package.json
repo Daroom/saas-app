@@ -11,9 +11,10 @@
     "db:generate": "turbo db:generate",
     "db:migrate": "turbo db:migrate",
     "db:push": "turbo db:push",
-    "db:seed": "turbo db:seed"
+    "db:seed": "turbo db:seed",
+    "clean": "turbo clean"
   },
-  "packageManager": "yarn@1.22.22",
+  "packageManager": "yarn@1.22.19",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -28,15 +29,15 @@
     "@types/node": "^20.19.1",
     "@types/react": "^18.2.46",
     "@types/react-dom": "^18.2.18",
-    "prettier": "^3.1.1",
+    "prettier": "^3.2.5",
     "tsx": "^4.20.3",
-    "turbo": "latest"
+    "turbo": "^1.12.4"
   },
   "engines": {
     "node": ">=18"
   },
   "workspaces": [
-    "packages/*",
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ]
 }

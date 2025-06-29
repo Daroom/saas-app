@@ -1,7 +1,10 @@
 {
   "extends": "@saas-app/config/typescript/client",
   "compilerOptions": {
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "paths": {
+      "@saas-app/ui": ["../../packages/ui/src"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
