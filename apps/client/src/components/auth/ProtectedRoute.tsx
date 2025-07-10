@@ -20,8 +20,14 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
   }, [token]);
 
   if (isLoading) {
-    // You could return a loading spinner here
-    return null;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[var(--color-background)]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--color-sidebar)]"></div>
+          <p className="text-[var(--color-muted-foreground)]">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
   if (!isAuthenticated || !token) {

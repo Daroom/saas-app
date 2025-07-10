@@ -12,7 +12,7 @@ import {
   Label,
 } from '@saas-app/ui';
 import { useAuth } from '../../hooks/useAuth';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Loader2 } from 'lucide-react';
 
 export function LoginPage() {
   const { login, isLoading } = useAuth();
@@ -57,11 +57,12 @@ export function LoginPage() {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="m@example.com"
+                    placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="bg-white/60 border-[var(--color-muted)] focus:border-[var(--color-sidebar-muted)] text-[var(--color-sidebar)] placeholder:text-[var(--color-muted-foreground)]"
+                    disabled={isLoading}
+                    className="bg-white/60 border-[var(--color-muted)] focus:border-[var(--color-sidebar-muted)] text-[var(--color-sidebar)] placeholder:text-[var(--color-muted-foreground)] disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
                 <div className="space-y-2">
@@ -72,13 +73,25 @@ export function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="bg-white/60 border-[var(--color-muted)] focus:border-[var(--color-sidebar-muted)] text-[var(--color-sidebar)] placeholder:text-[var(--color-muted-foreground)]"
+                    disabled={isLoading}
+                    className="bg-white/60 border-[var(--color-muted)] focus:border-[var(--color-sidebar-muted)] text-[var(--color-sidebar)] placeholder:text-[var(--color-muted-foreground)] disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
               </CardContent>
               <CardFooter className="flex flex-col space-y-2">
-                <Button type="submit" className="w-full bg-[var(--color-sidebar)] text-[var(--color-sidebar-foreground)] font-medium shadow-xl hover:bg-[var(--color-sidebar-muted)] transition-all duration-300" disabled={isLoading}>
-                  {isLoading ? "Loading..." : "Login"}
+                <Button 
+                  type="submit" 
+                  className="w-full bg-[var(--color-sidebar)] text-[var(--color-sidebar-foreground)] font-medium shadow-xl hover:bg-[var(--color-sidebar-muted)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed" 
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <div className="flex items-center gap-2">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Logging in...
+                    </div>
+                  ) : (
+                    "Login"
+                  )}
                 </Button>
                 <p className="px-8 text-center text-sm text-[var(--color-muted-foreground)]">
                   Don&apos;t have an account?{' '}

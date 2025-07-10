@@ -12,7 +12,7 @@ import {
   Label,
 } from '@saas-app/ui';
 import { useAuth } from '../../hooks/useAuth';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Loader2 } from 'lucide-react';
 
 export function RegisterPage() {
   const { register, isLoading } = useAuth();
@@ -66,11 +66,12 @@ export function RegisterPage() {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="m@example.com"
+                    placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="bg-white/60 border-[var(--color-muted)] focus:border-[var(--color-sidebar-muted)] text-[var(--color-sidebar)] placeholder:text-[var(--color-muted-foreground)]"
+                    disabled={isLoading}
+                    className="bg-white/60 border-[var(--color-muted)] focus:border-[var(--color-sidebar-muted)] text-[var(--color-sidebar)] placeholder:text-[var(--color-muted-foreground)] disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
                 <div className="space-y-2">
@@ -81,7 +82,8 @@ export function RegisterPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="bg-white/60 border-[var(--color-muted)] focus:border-[var(--color-sidebar-muted)] text-[var(--color-sidebar)] placeholder:text-[var(--color-muted-foreground)]"
+                    disabled={isLoading}
+                    className="bg-white/60 border-[var(--color-muted)] focus:border-[var(--color-sidebar-muted)] text-[var(--color-sidebar)] placeholder:text-[var(--color-muted-foreground)] disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
                 <div className="space-y-2">
@@ -92,7 +94,8 @@ export function RegisterPage() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
-                    className="bg-white/60 border-[var(--color-muted)] focus:border-[var(--color-sidebar-muted)] text-[var(--color-sidebar)] placeholder:text-[var(--color-muted-foreground)]"
+                    disabled={isLoading}
+                    className="bg-white/60 border-[var(--color-muted)] focus:border-[var(--color-sidebar-muted)] text-[var(--color-sidebar)] placeholder:text-[var(--color-muted-foreground)] disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                   {passwordError && (
                     <p className="text-red-500 text-xs mt-1">{passwordError}</p>
@@ -100,8 +103,19 @@ export function RegisterPage() {
                 </div>
               </CardContent>
               <CardFooter className="flex flex-col space-y-2">
-                <Button type="submit" className="w-full bg-[var(--color-sidebar)] text-[var(--color-sidebar-foreground)] font-medium shadow-xl hover:bg-[var(--color-sidebar-muted)] transition-all duration-300" disabled={isLoading}>
-                  {isLoading ? 'Loading...' : 'Register'}
+                <Button 
+                  type="submit" 
+                  className="w-full bg-[var(--color-sidebar)] text-[var(--color-sidebar-foreground)] font-medium shadow-xl hover:bg-[var(--color-sidebar-muted)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed" 
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <div className="flex items-center gap-2">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Creating account...
+                    </div>
+                  ) : (
+                    'Register'
+                  )}
                 </Button>
                 <p className="px-8 text-center text-sm text-[var(--color-muted-foreground)]">
                   Already have an account?{' '}
