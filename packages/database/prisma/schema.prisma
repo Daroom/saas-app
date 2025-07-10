@@ -14,8 +14,8 @@ model User {
   registration DateTime @default(now())
   updatedAt DateTime @updatedAt
   status       UserStatus @default(ACTIVE)
-  companyId    String
-  company      Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId    String?
+  company      Company?  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   
   @@map("users")
 }
@@ -70,8 +70,8 @@ model License {
   status    LicenseStatus @default(ACTIVE)
   
   // Foreign key
-  companyId String
-  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String?
+  company   Company?  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   
   @@map("licenses")
 }

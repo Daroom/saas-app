@@ -1,21 +1,23 @@
 // import type { User } from '../stores/useAuthStore';
-import type { AuthState } from '../stores/useAuthStore';
-
-import { useNavigate } from 'react-router-dom';
+import type { AuthState, User } from '../stores/useAuthStore';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../stores/useAuthStore';
 import { useToast } from '@saas-app/ui';
+import { useAuthContext } from '../providers/AuthProvider';
 
 export function useAuth() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
-  const myAuthStore: AuthState = useAuthStore();
-  const { user, token, isLoading, login, register, logout: storeLogout } = myAuthStore;
+  const { isAuthenticated, isInitialized } = useAuthContext();
+  const { user, token, isLoading, login, register, verifyToken, logout: storeLogout } = useAuthStore();
   
-  if(user){
-    console.log({user})
-  }else{
-    console.log('no user')
-  }
+  // if(user){
+  //   console.log({user})
+  // }else{
+  //   console.log('no user')
+  //   navigate('/login');
+  // }
 
   const handleLogin = async (email: string, password: string) => {
     try {
@@ -24,47 +26,69 @@ export function useAuth() {
         title: 'Success',
         description: 'Logged in successfully',
       });
-      navigate('/');
-    } catch (error) {
-      console.log({error});
+      // Navigate to the page they came from or home
+      const from = location.state?.from?.pathname || '/';
+      navigate(from, { replace: true });
+    } catch (error: any) {
+      console.error('Login error:', error);
       toast({
         variant: 'destructive',
         title: 'Error',
-        description: 'Invalid credentials',
+        description: error.response?.data?.error || 'Invalid credentials',
       });
     }
   };
 
-  const handleRegister = async (email: string, password: string, name: string) => {
+  const handleRegister = async (email: string, password: string) => {
     try {
-      await register(email, password, name);
+      await register(email, password);
       toast({
         title: 'Success',
         description: 'Registered successfully',
       });
-      navigate('/');
-    } catch (error) {
-      console.log({error});
+      navigate('/', { replace: true });
+    } catch (error: any) {
+      console.error('Registration error:', error);
       toast({
         variant: 'destructive',
         title: 'Error',
-        description: 'Registration failed',
+        description: 'An error occurred on registration',
       });
+    }
+  };
+
+  const handleVerifyToken = async () => {
+    try {
+      const user = await verifyToken();
+      return user;
+    } catch (error: any) {
+      console.error('Token verification error:', error);
+      throw error;
     }
   };
 
   const logout = () => {
     storeLogout();
-    navigate('/login');
+    toast({
+      title: 'Success',
+      description: 'Logged out successfully',
+    });
+    navigate('/login', { replace: true });
   };
 
   return {
     user,
     token,
     isLoading,
+    isAuthenticated,
+    isInitialized,
     login: handleLogin,
     register: handleRegister,
+    verifyToken: handleVerifyToken,
     logout,
-    isAuthenticated: !!token,
+    // Helper getters
+    isActive: user?.status === 'ACTIVE',
+    companyName: user?.company?.name || '',
+    companyId: user?.companyId || '',
   };
 } 

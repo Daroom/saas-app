@@ -1,15 +1,15 @@
 import { Router } from 'express';
-import { login, register } from '../controllers/authController';
-import { authenticateJWT } from '../middlewares/authMiddleware';
+import type { RequestHandler } from 'express';
+import { login, register, verifyToken } from '../controllers/authController.js';
+import { authenticateJWT } from '../middlewares/authMiddleware.js';
 
 const router = Router();
 
-router.post('/register', register);
-router.post('/login', login);
+// Public routes
+router.post('/register', register as RequestHandler);
+router.post('/login', login as RequestHandler);
 
-
-router.get('/profile', authenticateJWT, (req, res) => {
-  res.json({user:req.user});
-});
+// Protected routes
+router.get('/verify-token', authenticateJWT as RequestHandler, verifyToken as RequestHandler);
 
 export default router;

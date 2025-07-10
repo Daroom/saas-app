@@ -1,57 +1,130 @@
-import { NavLink } from 'react-router-dom';
-import { cn } from '@saas-app/ui';
-import {
-  LayoutDashboard,
-  Users,
-  FileText,
-  Key,
-} from 'lucide-react';
+import { Link } from "react-router-dom";
+import { Button } from "@saas-app/ui";
+import { LayoutDashboard, Users, FileText, Key, Sparkles, PanelLeftClose, PanelLeft } from "lucide-react";
+import { useState, type Dispatch, type SetStateAction } from "react";
+import { cn } from "@saas-app/ui";
 
-const navigation = [
-  { name: 'Dashboard', href: '/', icon: LayoutDashboard },
-  { name: 'Customers', href: '/customers', icon: Users },
-  { name: 'Invoices', href: '/invoices', icon: FileText },
-  { name: 'Licenses', href: '/licenses', icon: Key },
-];
+interface SidebarProps {
+  onCollapse?: Dispatch<SetStateAction<boolean>>;
+}
 
-export function Sidebar() {
+export function Sidebar({ onCollapse }: SidebarProps) {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+    onCollapse?.(!isCollapsed);
+  };
+
   return (
-    <div className="hidden border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col animate-in slide-in-from-left duration-500">
-      <div className="flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-4">
-        <nav className="flex flex-1 flex-col pt-8">
-          <ul role="list" className="flex flex-1 flex-col gap-y-7">
-            <li>
-              <ul role="list" className="-mx-2 space-y-1">
-                {navigation.map((item) => (
-                  <li key={item.name}>
-                    <NavLink
-                      to={item.href}
-                      className={({ isActive }) =>
-                        cn(
-                          'group flex gap-x-3 rounded-md p-2 text-sm font-medium leading-6 transition-all duration-200',
-                          'hover:bg-primary-50 hover:text-primary-900',
-                          isActive
-                            ? 'bg-primary-50 text-primary-900'
-                            : 'text-gray-700 hover:text-primary-900'
-                        )
-                      }
-                    >
-                      <item.icon 
-                        className={cn(
-                          "h-6 w-6 shrink-0 transition-colors duration-200",
-                          "group-hover:text-primary-600",
-                          "animate-in fade-in duration-300"
-                        )} 
-                      />
-                      <span className="animate-in fade-in duration-300">{item.name}</span>
-                    </NavLink>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          </ul>
-        </nav>
+    <div 
+      className={cn(
+        "fixed inset-y-0 left-0 z-50 flex flex-col bg-sidebar transition-all duration-300 ease-in-out",
+        isCollapsed ? "w-20" : "w-72"
+      )}
+    >
+      {/* Logo */}
+      <div className="flex h-16 items-center justify-between border-b border-sidebar-muted/10 px-6">
+        <div className="flex items-center gap-2">
+          <Sparkles className="h-6 w-6 text-purple" />
+          <span className={cn(
+            "font-bold text-xl text-sidebar-foreground whitespace-nowrap transition-all duration-300",
+            isCollapsed && "opacity-0 w-0 overflow-hidden"
+          )}>
+            Admin Panel
+          </span>
+        </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8 rounded-full text-sidebar-foreground hover:bg-sidebar-muted/10"
+          onClick={toggleCollapse}
+        >
+          {isCollapsed ? (
+            <PanelLeft className="h-4 w-4" />
+          ) : (
+            <PanelLeftClose className="h-4 w-4" />
+          )}
+        </Button>
       </div>
+
+      {/* Navigation */}
+      <div className="flex-1 space-y-1 p-2">
+        <Link to="/">
+          <Button
+            variant="ghost"
+            className={cn(
+              "w-full justify-start gap-2 text-sidebar-foreground hover:bg-sidebar-muted/10",
+              isCollapsed && "justify-center"
+            )}
+          >
+            <LayoutDashboard className="h-5 w-5" />
+            <span className={cn("transition-all duration-300", isCollapsed && "hidden")}>
+              Dashboard
+            </span>
+          </Button>
+        </Link>
+        <Link to="/customers">
+          <Button
+            variant="ghost"
+            className={cn(
+              "w-full justify-start gap-2 text-sidebar-foreground hover:bg-sidebar-muted/10",
+              isCollapsed && "justify-center"
+            )}
+          >
+            <Users className="h-5 w-5" />
+            <span className={cn("transition-all duration-300", isCollapsed && "hidden")}>
+              Customers
+            </span>
+          </Button>
+        </Link>
+        <Link to="/invoices">
+          <Button
+            variant="ghost"
+            className={cn(
+              "w-full justify-start gap-2 text-sidebar-foreground hover:bg-sidebar-muted/10",
+              isCollapsed && "justify-center"
+            )}
+          >
+            <FileText className="h-5 w-5" />
+            <span className={cn("transition-all duration-300", isCollapsed && "hidden")}>
+              Invoices
+            </span>
+          </Button>
+        </Link>
+        <Link to="/licenses">
+          <Button
+            variant="ghost"
+            className={cn(
+              "w-full justify-start gap-2 text-sidebar-foreground hover:bg-sidebar-muted/10",
+              isCollapsed && "justify-center"
+            )}
+          >
+            <Key className="h-5 w-5" />
+            <span className={cn("transition-all duration-300", isCollapsed && "hidden")}>
+              Licenses
+            </span>
+          </Button>
+        </Link>
+      </div>
+
+      {/* Upgrade Banner */}
+      {/* <div className={cn("p-4 transition-all duration-300", isCollapsed && "hidden")}>
+        <div className="rounded-lg bg-sidebar-muted p-4">
+          <div className="flex items-center gap-4">
+            <Sparkles className="h-8 w-8 text-sidebar-muted-foreground" />
+            <div>
+              <h3 className="font-medium text-sidebar-foreground">Upgrade to Pro</h3>
+              <p className="text-sm text-sidebar-muted-foreground">
+                Get more features and benefits
+              </p>
+            </div>
+          </div>
+          <Button className="mt-4 w-full bg-sidebar-muted-foreground text-sidebar hover:bg-sidebar-muted-foreground/90">
+            Upgrade Now
+          </Button>
+        </div>
+      </div> */}
     </div>
   );
 } 

@@ -1,11 +1,21 @@
 import { create } from 'zustand';
 import { api } from '../lib/axios';
 
+export type UserStatus = 'ACTIVE' | 'INACTIVE' | 'PENDING' | 'SUSPENDED';
+
+export interface Company {
+  id: string;
+  name: string;
+}
+
 export interface User {
   id: string;
   email: string;
-  name: string;
-  avatar?: string;
+  status: UserStatus;
+  registration: string;
+  updatedAt: string;
+  companyId: string;
+  company: Company;
 }
 
 export interface AuthState {
@@ -13,7 +23,8 @@ export interface AuthState {
   token: string | null;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string, name: string) => Promise<void>;
+  register: (email: string, password: string) => Promise<void>;
+  verifyToken: () => Promise<void>;
   logout: () => void;
 }
 
@@ -39,13 +50,26 @@ export const useAuthStore = create<AuthState>((set: AuthStore['set']) => ({
     }
   },
 
-  register: async (email: string, password: string, name: string) => {
+  register: async (email: string, password: string) => {
     set({ isLoading: true });
     try {
-      const response = await api.post('/auth/register', { email, password, name });
+      const response = await api.post('/auth/register', { email, password });
       const { token, user } = response.data;
       localStorage.setItem('token', token);
       set({ user, token, isLoading: false });
+    } catch (error) {
+      set({ isLoading: false });
+      throw error;
+    }
+  },
+
+  verifyToken: async () => {
+    set({ isLoading: true });
+    try {
+      const response = await api.get('/auth/verify-token');
+      const { user } = response.data;
+      set({ user, isLoading: false });
+      return user;
     } catch (error) {
       set({ isLoading: false });
       throw error;
