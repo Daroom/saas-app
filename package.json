@@ -1,0 +1,43 @@
+{
+  "name": "saas-app",
+  "private": true,
+  "scripts": {
+    "start": "turbo start",
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "typecheck": "turbo typecheck",
+    "db:generate": "turbo db:generate",
+    "db:migrate": "turbo db:migrate",
+    "db:push": "turbo db:push",
+    "db:seed": "turbo db:seed",
+    "clean": "turbo clean"
+  },
+  "packageManager": "yarn@1.22.19",
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.54.2",
+    "react-hot-toast": "^2.4.1",
+    "react-router-dom": "^6.26.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@saas-app/config": "*",
+    "@types/node": "^20.19.1",
+    "@types/react": "^18.2.46",
+    "@types/react-dom": "^18.2.18",
+    "prettier": "^3.2.5",
+    "tsx": "^4.20.3",
+    "turbo": "^1.12.4"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}

@@ -1,0 +1,4 @@
+{ 
+  "extends": "@saas-app/config/typescript/server",
+  "include": ["src/**/*", "prisma/**/*"]
+}
