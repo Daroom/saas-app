@@ -1,135 +1,229 @@
-# Turborepo starter
+# SaaS App - Business Operations Management Platform
 
-This Turborepo starter is maintained by the Turborepo core team.
+A modern, full-stack SaaS application designed to transform how businesses manage their operations. Built with cutting-edge technologies and a focus on user experience, this platform provides comprehensive tools for customer management, invoicing, and license tracking.
 
-## Using this example
+## ✨ Features
 
-Run the following command:
+### 🔐 Authentication & Security
+- **Secure JWT-based authentication** with token verification
+- **Protected routes** with role-based access control
+- **Session management** with automatic token refresh
+- **Password confirmation** with validation
+- **Modern login/register UI** with loading states
 
-```sh
-npx create-turbo@latest
+### 👥 Customer Management
+- **Complete CRUD operations** for customer data
+- **Customer status tracking** (Active, Inactive, Suspended)
+- **Company and contact information** management
+- **Search and filtering** capabilities
+- **Real-time data updates** with React Query
+
+### 📄 Invoice Management
+- **Invoice creation and tracking** with multiple statuses
+- **Customer association** for invoice generation
+- **Status management** (Draft, Sent, Paid, Overdue, Cancelled)
+- **Date tracking** and management
+- **Bulk operations** support
+
+### 🔑 License Management
+- **Software license tracking** with expiration dates
+- **Company association** for license allocation
+- **User limit management** per license
+- **Status monitoring** (Active, Expired, Suspended, Cancelled)
+- **Add/Delete operations** with confirmation
+
+### 🎨 Modern UI/UX
+- **Responsive design** that works on all devices
+- **Dark/Light theme** support with CSS variables
+- **Smooth animations** and transitions
+- **Loading states** and error handling
+- **Toast notifications** for user feedback
+- **Glassmorphism design** elements
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **React 18** with TypeScript
+- **Vite** for fast development and building
+- **React Router** for navigation
+- **React Query (TanStack Query)** for server state management
+- **Zustand** for client state management
+- **Tailwind CSS** for styling
+- **Lucide React** for icons
+- **React Hook Form** for form management
+
+### Backend
+- **Node.js** with Express
+- **TypeScript** for type safety
+- **Prisma** as ORM with MySQL database
+- **JWT** for authentication
+- **bcrypt** for password hashing
+- **CORS** enabled for cross-origin requests
+
+### Database
+- **MySQL** with Prisma schema
+- **Relationships** between Users, Companies, Customers, Invoices, and Licenses
+- **Enum types** for status management
+- **Cascade deletes** for data integrity
+
+### Development Tools
+- **Turborepo** for monorepo management
+- **ESLint** and **Prettier** for code quality
+- **TypeScript** configurations
+- **Shared UI components** library
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+ 
+- MySQL database
+- Yarn or npm
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd saas-app
+   ```
+
+2. **Install dependencies**
+   ```bash
+   yarn install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   # Copy the example env file
+   cp apps/api/.env.example apps/api/.env
+   
+   # Update with your database credentials
+   DATABASE_URL="mysql://username:password@localhost:3306/saas_app"
+   JWT_SECRET="your-secret-key"
+   ```
+
+4. **Set up the database**
+   ```bash
+   # Generate Prisma client
+   cd packages/database
+   yarn prisma generate
+   
+   # Run migrations
+   yarn prisma db push
+   ```
+
+5. **Start development servers**
+   ```bash
+   # Start both frontend and backend
+   yarn dev
+   
+   # Or start individually
+   yarn dev --filter=client  # Frontend only
+   yarn dev --filter=api     # Backend only
+   ```
+
+6. **Open your browser**
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:3000
+
+## 📁 Project Structure
+
+```
+saas-app/
+├── apps/
+│   ├── api/                 # Backend API server
+│   │   ├── src/
+│   │   │   ├── controllers/ # API route handlers
+│   │   │   ├── services/    # Business logic
+│   │   │   ├── routes/      # API routes
+│   │   │   └── middlewares/ # Express middlewares
+│   │   └── package.json
+│   └── client/              # Frontend React app
+│       ├── src/
+│       │   ├── components/  # Reusable UI components
+│       │   ├── pages/       # Page components
+│       │   ├── hooks/       # Custom React hooks
+│       │   ├── stores/      # Zustand stores
+│       │   └── providers/   # React context providers
+│       └── package.json
+├── packages/
+│   ├── database/            # Prisma schema and client
+│   ├── ui/                  # Shared UI components
+│   └── config/              # Shared configurations
+└── package.json
 ```
 
-## What's inside?
+## 🔧 Available Scripts
 
-This Turborepo includes the following packages/apps:
+```bash
+# Development
+yarn dev                    # Start all apps in development
+yarn dev --filter=client    # Start frontend only
+yarn dev --filter=api       # Start backend only
 
-### Apps and Packages
+# Building
+yarn build                  # Build all apps
+yarn build --filter=client  # Build frontend only
+yarn build --filter=api     # Build backend only
 
-- `api`: a [Node.js](https://nextjs.org/) app
-- `client`: another [React.js](https://nextjs.org/) app
-- `@saas-app/ui`: a stub React component library shared by both `client` and `api` applications
-- `@saas-app/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@saas-app/typescript-config`: `tsconfig.json`s used throughout the monorepo
+# Database
+yarn db:generate            # Generate Prisma client
+yarn db:push               # Push schema to database
+yarn db:studio             # Open Prisma Studio
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-npm exec turbo build
+# Linting
+yarn lint                  # Lint all packages
+yarn lint:fix              # Fix linting issues
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+## 🌟 Key Features in Detail
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=api
+### Authentication Flow
+- Secure login/register with email and password
+- JWT token management with automatic refresh
+- Protected routes with redirect handling
+- Loading states and error handling
+- Session persistence across browser sessions
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=api
-yarn exec turbo build --filter=api
-npm exec turbo build --filter=api
-```
+### Dashboard Analytics
+- Real-time customer count and statistics
+- Revenue tracking and growth metrics
+- Active user monitoring
+- Visual charts and progress indicators
 
-### Develop
+### Data Management
+- Full CRUD operations for all entities
+- Real-time search and filtering
+- Pagination support for large datasets
+- Bulk operations and batch processing
+- Data validation and error handling
 
-To develop all apps and packages, run the following command:
+### User Experience
+- Responsive design for mobile and desktop
+- Smooth animations and transitions
+- Intuitive navigation and breadcrumbs
+- Contextual help and tooltips
+- Accessibility features
 
-```
-cd my-turborepo
+## 🤝 Contributing
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-npm exec turbo dev
-```
+## 📝 License
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=client
+## 🙏 Acknowledgments
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=client
-yarn exec turbo dev --filter=client
-npm exec turbo dev --filter=client
-```
+- Built with [Turborepo](https://turborepo.com/) for monorepo management
+- UI components powered by [shadcn/ui](https://ui.shadcn.com/)
+- Icons from [Lucide React](https://lucide.dev/)
+- Database management with [Prisma](https://www.prisma.io/)
 
-### Remote Caching
+---
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-npm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-npm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+**Transform your business operations today with our comprehensive SaaS platform! 🚀**
