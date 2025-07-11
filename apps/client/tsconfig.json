@@ -4,7 +4,9 @@
     "moduleResolution": "bundler",
     "paths": {
       "@saas-app/ui": ["../../packages/ui/src"]
-    }
+    },
+    "noUnusedLocals": false
+    
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
