@@ -1,6 +1,6 @@
 # SaaS App - Business Operations Management Platform
 
-A modern, full-stack SaaS application designed to transform how businesses manage their operations. Built with cutting-edge technologies and a focus on user experience, this platform provides comprehensive tools for customer management, invoicing, and license tracking.
+A full-stack web application built as a master tenant, serving as part of the process of transforming traditional software into a multi-tenant SaaS solution for B2B use cases. It includes essential modules like customer management, invoicing, and license tracking, with a strong focus on scalability and user experience.
 
 ## ✨ Features
 
@@ -92,17 +92,7 @@ A modern, full-stack SaaS application designed to transform how businesses manag
    yarn install
    ```
 
-3. **Set up environment variables**
-   ```bash
-   # Copy the example env file
-   cp apps/api/.env.example apps/api/.env
-   
-   # Update with your database credentials
-   DATABASE_URL="mysql://username:password@localhost:3306/saas_app"
-   JWT_SECRET="your-secret-key"
-   ```
-
-4. **Set up the database**
+3. **Set up the database**
    ```bash
    # Generate Prisma client
    cd packages/database
@@ -112,7 +102,7 @@ A modern, full-stack SaaS application designed to transform how businesses manag
    yarn prisma db push
    ```
 
-5. **Start development servers**
+4. **Start development servers**
    ```bash
    # Start both frontend and backend
    yarn dev
@@ -122,7 +112,7 @@ A modern, full-stack SaaS application designed to transform how businesses manag
    yarn dev --filter=api     # Backend only
    ```
 
-6. **Open your browser**
+5. **Open your browser**
    - Frontend: http://localhost:5173
    - Backend API: http://localhost:3000
 
