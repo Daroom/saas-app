@@ -114,7 +114,7 @@ A full-stack web application built as a master tenant, serving as part of the pr
 
 5. **Open your browser**
    - Frontend: http://localhost:5173
-   - Backend API: http://localhost:3000
+   - Backend API: http://localhost:8080
 
 ## 📁 Project Structure
 
