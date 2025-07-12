@@ -1,6 +1,0 @@
-{
-  "buildCommand": "cd apps/client && yarn build",
-  "outputDirectory": "apps/client/build",
-  "installCommand": "yarn install",
-  "framework": "vite"
-}
